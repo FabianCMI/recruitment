@@ -14,6 +14,7 @@ class SearchableActivity  : AppCompatActivity() {
         if (Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
                 // doMySearch(query)
+
             }
         }
     }
