@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ManiakSearch</string>
+    <string name="search_hint">Rechercher sur l\'Itunes</string>
+</resources>
