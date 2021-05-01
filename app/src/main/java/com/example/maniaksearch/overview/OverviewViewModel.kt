@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.maniaksearch.network.ApiListResults
 import kotlinx.coroutines.launch
 
 /**
@@ -12,9 +13,12 @@ import kotlinx.coroutines.launch
  */
 class OverviewViewModel : ViewModel() {
 
+    // Status of the api call
     private val _status = MutableLiveData<String>()
-
     val status: LiveData<String> = _status
+    // Results of the call
+    private val _res = MutableLiveData<ApiListResults>()
+    val res: LiveData<ApiListResults> = _res
 
     /**
      * Call on init so we can display status immediately.
@@ -32,8 +36,12 @@ class OverviewViewModel : ViewModel() {
 
                 var queryParam: HashMap<String, String> = HashMap()
                 queryParam["media"] = "movie"
-                val listResult = ItunesApi.retrofitService.getResFromApi("star wars", queryParam)
-                _status.value = "Success: ${listResult.results[2].trackName}"
+                try {
+                    _res.value = ItunesApi.retrofitService.getResFromApi("star wars", queryParam)
+                    _status.value = "${_res.value!!.resultCount} résultat(s) trouvé(s)"
+                } catch (e: Exception) {
+                    _status.value = "Impossible de charger les données :  ${e.message}"
+                }
 
 
         }

@@ -13,16 +13,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.example.maniaksearch.overview.OverViewFragment">
-        <TextView
-            android:padding="20dp"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.status}"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/api_res_recycler_view"
+            android:padding="6dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scrollbars="vertical"
+            android:clipToPadding="false"
+            app:layoutManager="LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:listApiRes="@{viewModel.res.results}"
+            tools:layout_editor_absoluteX="183dp"
+            tools:layout_editor_absoluteY="247dp"
+            tools:itemCount="20"
+            tools:listitem="@layout/itunes_res_item"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

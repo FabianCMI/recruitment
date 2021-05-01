@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">ManiakSearch</string>
     <string name="search_hint">Rechercher sur l\'Itunes</string>
+    <string name="succes_call">résultats trouvés</string>
+    <string name="failure_call">Impossible de charger les données :</string>
 </resources>

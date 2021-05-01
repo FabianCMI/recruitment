@@ -15,6 +15,7 @@ data class ApiResults(
     val artistName: String? = null,
     val collectionName: String? = null,
     val trackName: String? = null,
+    val artworkUrl100: String? = null,
     val collectionPrice: Double? = null,
     val trackPrice: Double? = null,
     val releaseDate: String? = null,

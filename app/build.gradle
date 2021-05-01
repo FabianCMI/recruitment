@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -13,7 +14,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -58,6 +59,12 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
     // Moshi for JSON parsing
     implementation 'com.squareup.moshi:moshi-kotlin:1.9.3'
+
+    // Coil for image displaying
+    implementation "io.coil-kt:coil:1.1.1"
+
+    // Enable multidex support
+    implementation 'com.android.support:multidex:1.0.3'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
