@@ -35,7 +35,7 @@ class OverviewViewModel : ViewModel() {
         viewModelScope.launch {
 
                 var queryParam: HashMap<String, String> = HashMap()
-                queryParam["media"] = "movie"
+                queryParam["media"] = "music"
                 try {
                     _res.value = ItunesApi.retrofitService.getResFromApi("star wars", queryParam)
                     _status.value = "${_res.value!!.resultCount} résultat(s) trouvé(s)"

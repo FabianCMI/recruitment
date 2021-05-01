@@ -21,9 +21,21 @@ fun bindImage(imageView: ImageView, imageUrl: String?) {
 }
 
 @BindingAdapter("trackName")
-fun bindImage(textView: TextView, trackName: String?) {
+fun bindName(textView: TextView, trackName: String?) {
     textView.text = trackName
 }
+
+@BindingAdapter("trackYear")
+fun bindYear(textView: TextView, trackYear: String?) {
+    textView.text = trackYear
+}
+
+
+@BindingAdapter("trackPrice")
+fun bindPrice(textView: TextView, trackPrice: String?) {
+    textView.text = trackPrice
+}
+
 
 @BindingAdapter("listApiRes")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<ApiResults>?) {
