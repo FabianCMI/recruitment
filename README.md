@@ -1,4 +1,5 @@
-# My first android app, made as recruitment test for infomaniak
+# My first android app
+# Made as a recruitment test for infomaniak
 
 This App consists in an ITunes catalog browser
 
