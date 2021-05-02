@@ -1,5 +1,6 @@
 package com.example.maniaksearch.overview
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,30 +10,41 @@ import com.example.maniaksearch.databinding.ItunesResItemBinding
 import com.example.maniaksearch.network.AdaptedItunesRes
 import com.example.maniaksearch.network.ApiResults
 import java.text.NumberFormat
+import java.util.*
 
 class ApiLinearAdapter : ListAdapter<ApiResults,
         ApiLinearAdapter.ItunesResViewHolder>(DiffCallback) {
 
-    class ItunesResViewHolder(private var binding: ItunesResItemBinding)
-        : RecyclerView.ViewHolder(binding.root) {
+    class ItunesResViewHolder(private var binding: ItunesResItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         /**
          * Parsing the results to adapt displayed data in function of the media
          */
-        fun bind(iTunesRes : ApiResults) {
+        fun bind(iTunesRes: ApiResults) {
             val adaptedItunesRes = AdaptedItunesRes()
-
-            if(iTunesRes.trackPrice != null) {
-                adaptedItunesRes.price =
-                        NumberFormat.getCurrencyInstance().format(iTunesRes.trackPrice)
-            } else if(iTunesRes.collectionPrice != null) {
-                adaptedItunesRes.price =
-                        NumberFormat.getCurrencyInstance().format(iTunesRes.collectionPrice)
+            val country: Locale = when(iTunesRes.country) {
+                "CHE" -> Locale.FRENCH
+                "DEU" -> Locale.GERMANY
+                "FRA" -> Locale.FRANCE
+                "GBR" -> Locale.UK
+                "USA" -> Locale.US
+                else -> Locale.FRANCE
             }
-            if(iTunesRes.trackName != null) {
+            Log.d(TAG, "country locale $country")
+            if (iTunesRes.trackPrice != null) {
+                adaptedItunesRes.price =
+                    NumberFormat.getCurrencyInstance(country).format(iTunesRes.trackPrice)
+            } else if (iTunesRes.collectionPrice != null) {
+                adaptedItunesRes.price =
+                    NumberFormat.getCurrencyInstance().format(iTunesRes.collectionPrice)
+            }
+            if (iTunesRes.trackName != null) {
                 adaptedItunesRes.name = iTunesRes.trackName
-            } else if(iTunesRes.collectionPrice != null) {
-                adaptedItunesRes.name = iTunesRes.collectionName.toString().replace(Regex("""\((Una|A)bridged\)"""), "")
+            } else if (iTunesRes.collectionPrice != null) {
+                adaptedItunesRes.name =
+                    iTunesRes.collectionName.toString()
+                        .replace(Regex("""\((Una|A)bridged\)"""), "")
             }
             adaptedItunesRes.releaseDate = iTunesRes.releaseDate?.substring(0, 4) ?: ""
             adaptedItunesRes.artistName = iTunesRes.artistName
@@ -42,7 +54,11 @@ class ApiLinearAdapter : ListAdapter<ApiResults,
             binding.executePendingBindings()
         }
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApiLinearAdapter.ItunesResViewHolder {
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ApiLinearAdapter.ItunesResViewHolder {
         return ItunesResViewHolder(ItunesResItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 

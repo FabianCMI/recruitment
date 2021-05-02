@@ -9,6 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.maniaksearch.network.ApiListResults
 import kotlinx.coroutines.launch
 
+// Tag for logcat
+const val TAG = "OverviewViewModel"
+
 /**
  * The [ViewModel] that is attached to the [OverviewFragment].
  */
@@ -33,7 +36,7 @@ class OverviewViewModel : ViewModel() {
         // Launch the api call on a background thread
         viewModelScope.launch {
                 try {
-                Log.d("OverView", "searching for ${query.value}")
+                Log.d(TAG, "searching for ${query.value} with param ${queryParam.toString()}")
                     _res.value = query.value?.let { ItunesApi.retrofitService.getResFromApi(it, queryParam) }
                     _status.value = "${_res.value!!.resultCount} résultat(s) trouvé(s)"
                 } catch (e: Exception) {

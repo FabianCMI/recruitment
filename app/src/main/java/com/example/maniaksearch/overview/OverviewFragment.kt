@@ -1,7 +1,6 @@
 package com.example.maniaksearch.overview
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,10 +18,12 @@ class OverviewFragment() : androidx.fragment.app.Fragment() {
      */
     companion object {
         const val QUERY = "query"
+        const val QUERY_PARAM = "query_param"
 
-        fun newInstance(query : String): OverviewFragment {
+        fun newInstance(query : String, queryParam: HashMap<String, String>): OverviewFragment {
             val args = Bundle()
             args.putString(QUERY, query)
+            args.putSerializable(QUERY_PARAM, queryParam)
             val fragment = OverviewFragment()
             fragment.arguments = args
             return fragment
@@ -30,12 +31,12 @@ class OverviewFragment() : androidx.fragment.app.Fragment() {
     }
 
     private val viewModel: OverviewViewModel by viewModels()
-    private lateinit var searchQuery: String
-
+    var  queryParam: HashMap<String, String> = HashMap()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             viewModel.query.value = it.getString(QUERY).toString()
+            queryParam = it.getSerializable(QUERY_PARAM) as HashMap<String, String>
         }
     }
 
@@ -52,9 +53,8 @@ class OverviewFragment() : androidx.fragment.app.Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         binding.apiResRecyclerView.adapter = ApiLinearAdapter()
-        Log.d("OverviewViewModel","onCreateView ${viewModel.query.value}")
         viewModel.query.observe(viewLifecycleOwner, { newQuery ->
-           viewModel.getApiResults(newQuery, HashMap<String, String>())
+           viewModel.getApiResults(newQuery, queryParam)
         }
         )
 

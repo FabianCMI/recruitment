@@ -3,4 +3,10 @@
     <string name="search_hint">Rechercher sur l\'Itunes</string>
     <string name="succes_call">résultats trouvés</string>
     <string name="failure_call">Impossible de charger les données :</string>
+    <string name="param">Paramètres</string>
+    <string name="param_explicit">Autoriser les recherches explicites</string>
+    <string name="param_lang">Pays</string>
+    <string name="param_lang_fr">France</string>
+    <string name="param_lang_us">USA</string>
+    <string name="param_lang_en">UK</string>
 </resources>
