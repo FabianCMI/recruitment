@@ -25,6 +25,7 @@ class ApiLinearAdapter : ListAdapter<ApiResults,
 
     override fun onBindViewHolder(holder: ApiLinearAdapter.ItunesResViewHolder, position: Int) {
         holder.bind(getItem(position))
+
     }
 
     /**

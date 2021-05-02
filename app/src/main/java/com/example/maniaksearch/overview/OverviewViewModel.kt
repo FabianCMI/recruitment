@@ -1,6 +1,7 @@
 package com.example.maniaksearch.overview
 
 import ItunesApi
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,24 +21,25 @@ class OverviewViewModel : ViewModel() {
     private val _res = MutableLiveData<ApiListResults>()
     val res: LiveData<ApiListResults> = _res
 
+    val query = MutableLiveData<String>()
     /**
      * Call on init so we can display status immediately.
      */
     init {
-        getApiResults()
+        getApiResults("Star Wars")
     }
 
     /**
      * Gets the results from the user's query Itunes api call
      */
-    private fun getApiResults() {
+    fun getApiResults(searchQuery: String) {
         // Launch the api call on a background thread
         viewModelScope.launch {
-
                 var queryParam: HashMap<String, String> = HashMap()
                 queryParam["media"] = "music"
                 try {
-                    _res.value = ItunesApi.retrofitService.getResFromApi("star wars", queryParam)
+                Log.d("OverView", "searching for ${query.value}")
+                    _res.value = query.value?.let { ItunesApi.retrofitService.getResFromApi(it, queryParam) }
                     _status.value = "${_res.value!!.resultCount} résultat(s) trouvé(s)"
                 } catch (e: Exception) {
                     _status.value = "Impossible de charger les données :  ${e.message}"

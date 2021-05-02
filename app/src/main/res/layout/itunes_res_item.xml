@@ -21,8 +21,9 @@
 
                 <ImageView
                     android:id="@+id/api_item_imageView"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginEnd="10dp"
                     app:imageUrl="@{apiRes.artworkUrl100}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -36,8 +37,9 @@
                     android:layout_height="match_parent"
                     android:padding="2dp"
                     android:textSize="16dp"
+                    android:textColor="@color/primary"
                     android:textAlignment="center"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/api_item_artist_name"
                     app:layout_constraintStart_toEndOf="@+id/api_item_imageView"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.508"
@@ -45,15 +47,33 @@
                     tools:text="A" />
 
                 <TextView
+                    android:id="@+id/api_item_artist_name"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:padding="2dp"
+                    android:textSize="16dp"
+                    android:textAlignment="center"
+                    android:textStyle="italic"
+                    android:textColor="@color/primary_light"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/api_item_imageView"
+                    app:layout_constraintTop_toBottomOf="@id/api_item_name"
+                    app:layout_constraintVertical_bias="0.508"
+                    app:trackName="@{apiRes.artistName}"
+                    tools:text="A" />
+
+                <TextView
                     android:id="@+id/api_item_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
                     android:gravity="top"
-                    android:padding="2dp"
-                    app:layout_constraintBottom_toTopOf="@id/api_item_year"
+                    android:textSize="12dp"
+                    android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:trackPrice="@{apiRes.trackPrice.toString()}"
+                    app:trackPrice="@{apiRes.trackPrice.toString() + ' ' + apiRes.currency}"
                     tools:text="$99.99" />
 
                 <TextView
@@ -62,9 +82,9 @@
                     android:layout_height="wrap_content"
                     android:gravity="bottom"
                     android:padding="2dp"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/api_item_price"
                     app:trackYear="@{apiRes.releaseDate.substring(0, 4)}"
                     tools:text="2019" />
 
