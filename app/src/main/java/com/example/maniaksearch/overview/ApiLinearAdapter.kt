@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.maniaksearch.databinding.ItunesResItemBinding
+import com.example.maniaksearch.network.AdaptedItunesRes
 import com.example.maniaksearch.network.ApiResults
+import java.text.NumberFormat
 
 class ApiLinearAdapter : ListAdapter<ApiResults,
         ApiLinearAdapter.ItunesResViewHolder>(DiffCallback) {
@@ -14,8 +16,29 @@ class ApiLinearAdapter : ListAdapter<ApiResults,
     class ItunesResViewHolder(private var binding: ItunesResItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
+        /**
+         * Parsing the results to adapt displayed data in function of the media
+         */
         fun bind(iTunesRes : ApiResults) {
-            binding.apiRes = iTunesRes
+            val adaptedItunesRes = AdaptedItunesRes()
+
+            if(iTunesRes.trackPrice != null) {
+                adaptedItunesRes.price =
+                        NumberFormat.getCurrencyInstance().format(iTunesRes.trackPrice)
+            } else if(iTunesRes.collectionPrice != null) {
+                adaptedItunesRes.price =
+                        NumberFormat.getCurrencyInstance().format(iTunesRes.collectionPrice)
+            }
+            if(iTunesRes.trackName != null) {
+                adaptedItunesRes.name = iTunesRes.trackName
+            } else if(iTunesRes.collectionPrice != null) {
+                adaptedItunesRes.name = iTunesRes.collectionName.toString().replace(Regex("""\((Una|A)bridged\)"""), "")
+            }
+            adaptedItunesRes.releaseDate = iTunesRes.releaseDate?.substring(0, 4) ?: ""
+            adaptedItunesRes.artistName = iTunesRes.artistName
+            adaptedItunesRes.artwork = iTunesRes.artworkUrl100
+
+            binding.apiRes = adaptedItunesRes
             binding.executePendingBindings()
         }
     }

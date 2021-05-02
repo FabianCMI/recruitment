@@ -54,7 +54,7 @@ class OverviewFragment() : androidx.fragment.app.Fragment() {
         binding.apiResRecyclerView.adapter = ApiLinearAdapter()
         Log.d("OverviewViewModel","onCreateView ${viewModel.query.value}")
         viewModel.query.observe(viewLifecycleOwner, { newQuery ->
-           viewModel.getApiResults(newQuery)
+           viewModel.getApiResults(newQuery, HashMap<String, String>())
         }
         )
 

@@ -25,18 +25,13 @@ class OverviewViewModel : ViewModel() {
     /**
      * Call on init so we can display status immediately.
      */
-    init {
-        getApiResults("Star Wars")
-    }
 
     /**
      * Gets the results from the user's query Itunes api call
      */
-    fun getApiResults(searchQuery: String) {
+    fun getApiResults(searchQuery: String, queryParam: HashMap<String, String>) {
         // Launch the api call on a background thread
         viewModelScope.launch {
-                var queryParam: HashMap<String, String> = HashMap()
-                queryParam["media"] = "music"
                 try {
                 Log.d("OverView", "searching for ${query.value}")
                     _res.value = query.value?.let { ItunesApi.retrofitService.getResFromApi(it, queryParam) }

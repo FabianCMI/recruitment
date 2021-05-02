@@ -24,11 +24,11 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_marginEnd="10dp"
-                    app:imageUrl="@{apiRes.artworkUrl100}"
+                    android:gravity = 'center_vertical'
+                    app:imageUrl="@{apiRes.artwork}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
@@ -43,7 +43,7 @@
                     app:layout_constraintStart_toEndOf="@+id/api_item_imageView"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.508"
-                    app:trackName="@{apiRes.trackName}"
+                    app:trackName="@{apiRes.name}"
                     tools:text="A" />
 
                 <TextView
@@ -73,7 +73,7 @@
                     android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:trackPrice="@{apiRes.trackPrice.toString() + ' ' + apiRes.currency}"
+                    app:trackPrice="@{apiRes.price}"
                     tools:text="$99.99" />
 
                 <TextView
@@ -85,7 +85,7 @@
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:trackYear="@{apiRes.releaseDate.substring(0, 4)}"
+                    app:trackYear="@{apiRes.releaseDate}"
                     tools:text="2019" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -96,6 +96,6 @@
 
         <variable
             name="apiRes"
-            type="com.example.maniaksearch.network.ApiResults" />
+            type="com.example.maniaksearch.network.AdaptedItunesRes" />
     </data>
 </layout>

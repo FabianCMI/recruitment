@@ -1,5 +1,7 @@
 package com.example.maniaksearch.network
 
+import com.example.maniaksearch.R
+
 /**
  * Data class for parsing interesting api results from the Json to an object with moshi
  */
@@ -23,4 +25,12 @@ data class ApiResults(
     val currency: String? = null,
     val shortDescription: String? = null,
     val primaryGenreName: String? = null
+)
+
+data class AdaptedItunesRes(
+        var name: String? = "Oeuvre inconnue",
+        var artistName: String? = "Artist inconnu",
+        var price : String? = "",
+        var artwork: String? = R.drawable.ic_broken_image.toString(),
+        var releaseDate: String? = ""
 )
