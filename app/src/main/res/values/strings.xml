@@ -24,4 +24,9 @@
     <string name="media_toast">Filtre media activé :</string>
     <string name="country_toast">"Localisation choisie : "</string>
     <string name="filters">Filtres</string>
+    <string name="dialog_filters">Choisissez les filtres que vous voulez appliquer à la recherche</string>
+    <string name="dialog_valid">Valider</string>
+    <string name="dialog_cancel">Annuler</string>
+    <string name="dialog_filters_title">Filtrer la recherche</string>
+    <string name="dialog_filters_lang_title">Rechercher dans l\'ITunes Store</string>
 </resources>

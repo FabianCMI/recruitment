@@ -13,17 +13,17 @@ import androidx.core.content.edit
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
 import com.example.maniaksearch.callapi.ItunesResFragment
-import com.example.maniaksearch.filters.DataSource
-import com.example.maniaksearch.filters.FiltersAdapter
+import com.example.maniaksearch.filters.*
 import org.json.JSONObject
 
 const val TAG = "MainActivity"
 const val SHARED_PREF_KEY = "last_query"
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ISelectedCountry{
 
     // HashMap storing the query filters
-    val queryParam: HashMap<String, String> = HashMap()
+    var queryParam: HashMap<String, String> = HashMap()
+    var query: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +56,6 @@ class MainActivity : AppCompatActivity() {
                 this,
                 "${this.getString(R.string.media_toast)} ${this.getString(it.stringResourceId)}",
                 Toast.LENGTH_SHORT).show()
-            Log.d(TAG, "Clicked on item ${it.toString()}")
         }
         filterRecyclerView.setHasFixedSize(true)
 
@@ -71,21 +70,21 @@ class MainActivity : AppCompatActivity() {
         val searchView: SearchView = findViewById(R.id.searchBar)
         // Set a Listener on the Query submit that replace the current fragment with a new one
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
+            override fun onQueryTextSubmit(queryString: String): Boolean {
+                query = queryString
                 // Store the query in the shared preference to display it on next app usage
                 sharedPref.edit() {
                     try {
                         remove(SHARED_PREF_KEY)
                         putString(SHARED_PREF_KEY, query + '_' + JSONObject(queryParam as Map<*, *>).toString())
                         commit()
-                        Log.d(TAG, "Store ${query + '_' + JSONObject(queryParam as Map<*, *>).toString()}")
                     } catch (e: Exception) {
                         Log.e(TAG, "Error storing query $e")
                     }
                 }
 
                 // Replace the fragment to update the view
-                createFrag(query, queryParam)
+                createFragApiRes(query, queryParam)
                 return false
             }
 
@@ -100,20 +99,22 @@ class MainActivity : AppCompatActivity() {
             // Retrieve the data stored (query_jsonStringOf(queryParam)) then create a frag with it
             val queryData = lastQuery?.split("_")
             queryData?.let {
-                val query = it[0]
-                val queryParam: HashMap<String, String> = hashMapOf()
+                query = it[0]
+                queryParam = hashMapOf()
                 val jsonObject = JSONObject(it[1])
                 val keyIter = jsonObject.keys()
                 while (keyIter.hasNext()) {
                     val key = keyIter.next()
                     queryParam[key] = jsonObject.get(key) as String
                 }
-                createFrag(query, queryParam)
+                Log.d(TAG, "$query ${queryParam.toString()}")
+                createFragApiRes(query, queryParam)
             }
 
         }
     }
 
+    /****************** MENU *****************/
 
     /**
      * Overriding function for using menu
@@ -127,9 +128,8 @@ class MainActivity : AppCompatActivity() {
      * Overriding function to use menu
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        var countryISO = "FR"
-        var isCountryChange = false
         when (item.itemId) {
+            // (un)Allow explicit search
             R.id.param_explicit -> {
                 item.isChecked = !item.isChecked
                 if(item.isChecked) {
@@ -137,39 +137,28 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     queryParam["explicit"] = "no"
                 }
-                Log.d("MainActivity", queryParam.toString())
+
+                createFragApiRes(query, queryParam)
                 return true
             }
-            R.id.param_lang_us -> {
-                item.isChecked = !item.isChecked
-                countryISO = "US"
-                isCountryChange = true
+
+            // Open Filters Dialog
+            R.id.menu_filters -> {
+                FiltersDialogFragment().show(supportFragmentManager, "filters_menu")
             }
-            R.id.param_lang_en -> {
-                item.isChecked = !item.isChecked
-                countryISO = "GB"
-                isCountryChange = true
+            // Open Language dialog
+            R.id.param_lang -> {
+                DialogFilterLangFragment().show(supportFragmentManager, "lang_dialog")
             }
-            R.id.param_lang_fr -> {
-                item.isChecked = !item.isChecked
-                countryISO = "FR"
-                isCountryChange = true
-            }
+
             else -> super.onOptionsItemSelected(item)
-        }
-        queryParam["country"] = countryISO;
-        // Send a toast is the country is changed
-        if(isCountryChange) {
-            Toast.makeText(
-                this,
-                "${this.getString(R.string.country_toast)} $countryISO",
-                Toast.LENGTH_SHORT
-            ).show()
         }
         return true
     }
 
-    private fun createFrag(query: String, queryParam: HashMap<String, String>) {
+    /**************** Other functions **************/
+
+    private fun createFragApiRes(query: String, queryParam: HashMap<String, String>) {
         supportFragmentManager.commit {
             replace(
                     R.id.itunesResFragment,
@@ -177,6 +166,17 @@ class MainActivity : AppCompatActivity() {
                     ItunesResFragment::class.java.name
             )
         }
+    }
+
+    override fun onSelectedCountry(string: String?) {
+        queryParam["country"] = when(string.toString()) {
+            "France" -> "FR"
+            "Allemagne" -> "DE"
+            "Royaume-Uni" -> "GB"
+            "USA" -> "US"
+            else -> "FRA"
+        }
+        createFragApiRes(query, queryParam)
     }
 
 }

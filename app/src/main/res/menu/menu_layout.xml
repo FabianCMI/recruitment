@@ -28,14 +28,6 @@
         <item android:id="@+id/param_lang"
             android:title="@string/param_lang"
             android:icon="@drawable/ic_connection_error">
-            <menu>
-                <item android:id="@+id/param_lang_fr"
-                    android:title="@string/param_lang_fr" />
-                <item android:id="@+id/param_lang_us"
-                    android:title="@string/param_lang_us" />
-                <item android:id="@+id/param_lang_en"
-                    android:title="@string/param_lang_en" />
-            </menu>
         </item>
 
     </group>
