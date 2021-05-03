@@ -7,9 +7,9 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.maniaksearch.callapi.ApiCallStatus
+import com.example.maniaksearch.callapi.ApiLinearAdapter
 import com.example.maniaksearch.network.ApiResults
-import com.example.maniaksearch.overview.ApiCallStatus
-import com.example.maniaksearch.overview.ApiLinearAdapter
 
 @BindingAdapter("imageUrl")
 fun bindImage(imageView: ImageView, imageUrl: String?) {

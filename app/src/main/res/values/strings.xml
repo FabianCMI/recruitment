@@ -23,4 +23,5 @@
     <string name="media_all">Tous les media</string>
     <string name="media_toast">Filtre media activé :</string>
     <string name="country_toast">"Localisation choisie : "</string>
+    <string name="filters">Filtres</string>
 </resources>

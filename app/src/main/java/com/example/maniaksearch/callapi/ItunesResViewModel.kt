@@ -1,4 +1,4 @@
-package com.example.maniaksearch.overview
+package com.example.maniaksearch.callapi
 
 import ItunesApi
 import androidx.lifecycle.LiveData
@@ -14,9 +14,9 @@ enum class ApiCallStatus { LOADING, ERROR, SUCCESS }
 const val TAG = "OverviewViewModel"
 
 /**
- * The [ViewModel] that is attached to the [OverviewFragment].
+ * The [ViewModel] that is attached to the [ItunesResFragment].
  */
-class OverviewViewModel : ViewModel() {
+class ItunesResViewModel : ViewModel() {
 
     // Status of the api call
     private val _status = MutableLiveData<ApiCallStatus>()

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,39 +19,39 @@
         android:layout_height="wrap_content"
         android:padding="2dp"
         android:paddingBottom="10dp"
-        app:queryHint="@string/search_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/include"
-        app:layout_constraintVertical_bias="0.046" />
+        app:layout_constraintVertical_bias="0.046"
+        app:queryHint="@string/search_hint" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/filterRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:scrollbars="horizontal"
-        android:orientation="horizontal"
         android:layout_marginBottom="8dp"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:scrollbars="horizontal"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchBar"
-        tools:listitem="@layout/filter_item"
-        tools:context="com.iteritory.itcrecyclerviewhorizontallist.MainActivity"/>
+        tools:context="com.iteritory.itcrecyclerviewhorizontallist.MainActivity"
+        tools:listitem="@layout/filter_item" />
 
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/overviewFragment"
-        android:name="com.example.maniaksearch.overview.OverviewFragment"
+        android:id="@+id/itunesResFragment"
+        android:name="com.example.maniaksearch.callapi.ItunesResFragment"
         android:layout_width="match_parent"
         android:layout_height="555dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/filterRecyclerView"
-        tools:layout="@layout/fragment_overview" />
+        tools:layout="@layout/fragment_itunes_res" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

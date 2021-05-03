@@ -12,9 +12,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.edit
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
+import com.example.maniaksearch.callapi.ItunesResFragment
 import com.example.maniaksearch.filters.DataSource
 import com.example.maniaksearch.filters.FiltersAdapter
-import com.example.maniaksearch.overview.OverviewFragment
 import org.json.JSONObject
 
 const val TAG = "MainActivity"
@@ -172,9 +172,9 @@ class MainActivity : AppCompatActivity() {
     private fun createFrag(query: String, queryParam: HashMap<String, String>) {
         supportFragmentManager.commit {
             replace(
-                    R.id.overviewFragment,
-                    OverviewFragment.newInstance(query, queryParam),
-                    OverviewFragment::class.java.name
+                    R.id.itunesResFragment,
+                    ItunesResFragment.newInstance(query, queryParam),
+                    ItunesResFragment::class.java.name
             )
         }
     }
