@@ -40,10 +40,6 @@ class OverviewFragment() : androidx.fragment.app.Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
