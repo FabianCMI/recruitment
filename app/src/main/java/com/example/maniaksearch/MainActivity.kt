@@ -146,7 +146,7 @@ class MainActivity : AppCompatActivity(), ISelectedCountry, ISelectedLimit{
             }
             // Open Language dialog
             R.id.param_lang -> {
-                DialogFilterLangFragment().show(supportFragmentManager, "lang_dialog")
+                DialogFilterLangFragment(queryParam["country"]?: "FR").show(supportFragmentManager, "lang_dialog")
             }
 
             else -> super.onOptionsItemSelected(item)

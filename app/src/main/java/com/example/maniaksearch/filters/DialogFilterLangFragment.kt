@@ -10,21 +10,27 @@ import com.example.maniaksearch.R
 
 const val TAG = "DialogLang"
 
-class DialogFilterLangFragment : DialogFragment() {
+class DialogFilterLangFragment(oldCountry: String) : DialogFragment() {
     val countryList= arrayOf("France", "USA", "Royaume-Uni", "Allemagne")
     private var chosenCountry: ISelectedCountry? = null
-    private var checkedId = -1
+    private var checkedId = when(oldCountry) {
+        "FR" -> 0
+        "US" -> 1
+        "GB" -> 2
+        "DE" -> 3
+        else -> 0
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(it)
             builder.setSingleChoiceItems(countryList, checkedId) { _, which ->
-                chosenCountry?.onSelectedCountry(countryList[which])
+                checkedId = which
             }
                     .setTitle(R.string.dialog_filters_lang_title)
                     .setPositiveButton(R.string.dialog_valid) { dialog, id ->
-                        checkedId = id
+                        chosenCountry?.onSelectedCountry(countryList[checkedId])
                     }
                     .setNegativeButton(R.string.dialog_cancel) { dialog, id -> }
             // Create the AlertDialog object and return it
