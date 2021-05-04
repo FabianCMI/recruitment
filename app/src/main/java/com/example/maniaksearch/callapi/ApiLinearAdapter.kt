@@ -12,18 +12,18 @@ import com.example.maniaksearch.network.ApiResults
 import java.text.NumberFormat
 import java.util.*
 
-class ApiLinearAdapter : ListAdapter<ApiResults,
+class ApiLinearAdapter(private val listener: (ApiResults) -> Unit) : ListAdapter<ApiResults,
         ApiLinearAdapter.ItunesResViewHolder>(DiffCallback) {
 
     class ItunesResViewHolder(private var binding: ItunesResItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+            RecyclerView.ViewHolder(binding.root) {
 
         /**
          * Parsing the results to adapt displayed data in function of the media
          */
         fun bind(iTunesRes: ApiResults) {
             val adaptedItunesRes = AdaptedItunesRes()
-            val country: Locale = when(iTunesRes.country) {
+            val country: Locale = when (iTunesRes.country) {
                 "CHE" -> Locale.FRENCH
                 "DEU" -> Locale.GERMANY
                 "FRA" -> Locale.FRANCE
@@ -34,21 +34,22 @@ class ApiLinearAdapter : ListAdapter<ApiResults,
             Log.d(TAG, "country locale $country")
             if (iTunesRes.trackPrice != null) {
                 adaptedItunesRes.price =
-                    NumberFormat.getCurrencyInstance(country).format(iTunesRes.trackPrice)
+                        NumberFormat.getCurrencyInstance(country).format(iTunesRes.trackPrice)
             } else if (iTunesRes.collectionPrice != null) {
                 adaptedItunesRes.price =
-                    NumberFormat.getCurrencyInstance().format(iTunesRes.collectionPrice)
+                        NumberFormat.getCurrencyInstance().format(iTunesRes.collectionPrice)
             }
             if (iTunesRes.trackName != null) {
                 adaptedItunesRes.name = iTunesRes.trackName
             } else if (iTunesRes.collectionPrice != null) {
                 adaptedItunesRes.name =
-                    iTunesRes.collectionName.toString()
-                        .replace(Regex("""\((Una|A)bridged\)"""), "")
+                        iTunesRes.collectionName.toString()
+                                .replace(Regex("""\((Una|A)bridged\)"""), "")
             }
             adaptedItunesRes.releaseDate = iTunesRes.releaseDate?.substring(0, 4) ?: ""
             adaptedItunesRes.artistName = iTunesRes.artistName
             adaptedItunesRes.artwork = iTunesRes.artworkUrl100
+            adaptedItunesRes.collectionViewUrl = iTunesRes.collectionViewUrl
 
             binding.apiRes = adaptedItunesRes
             binding.executePendingBindings()
@@ -56,14 +57,16 @@ class ApiLinearAdapter : ListAdapter<ApiResults,
     }
 
     override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
+            parent: ViewGroup,
+            viewType: Int
     ): ApiLinearAdapter.ItunesResViewHolder {
         return ItunesResViewHolder(ItunesResItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     override fun onBindViewHolder(holder: ApiLinearAdapter.ItunesResViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val item = getItem(position)
+        holder.bind(item)
+        holder.itemView.setOnClickListener { listener(item) }
 
     }
 
@@ -85,4 +88,6 @@ class ApiLinearAdapter : ListAdapter<ApiResults,
         }
 
     }
+
 }
+

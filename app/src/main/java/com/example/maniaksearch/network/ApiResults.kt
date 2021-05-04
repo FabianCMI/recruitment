@@ -17,6 +17,7 @@ data class ApiResults(
     val artistName: String? = null,
     val collectionName: String? = null,
     val trackName: String? = null,
+    var collectionViewUrl: String? = null,
     val artworkUrl100: String? = null,
     val collectionPrice: Double? = null,
     val trackPrice: Double? = null,
@@ -33,5 +34,6 @@ data class AdaptedItunesRes(
     var artistName: String? = "Artist inconnu",
     var price: String? = "",
     var artwork: String? = R.drawable.ic_broken_image.toString(),
-    var releaseDate: String? = ""
+    var releaseDate: String? = "",
+    var collectionViewUrl: String? = ""
 )
