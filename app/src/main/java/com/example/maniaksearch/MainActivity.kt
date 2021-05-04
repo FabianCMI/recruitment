@@ -1,6 +1,8 @@
 package com.example.maniaksearch
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -12,6 +14,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.edit
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
+import com.example.maniaksearch.callapi.ISelectedCard
 import com.example.maniaksearch.callapi.ItunesResFragment
 import com.example.maniaksearch.filters.*
 import org.json.JSONObject
@@ -19,7 +22,7 @@ import org.json.JSONObject
 const val TAG = "MainActivity"
 const val SHARED_PREF_KEY = "last_query"
 
-class MainActivity : AppCompatActivity(), ISelectedCountry, ISelectedLimit{
+class MainActivity : AppCompatActivity(), ISelectedCountry, ISelectedLimit, ISelectedCard {
 
     // HashMap storing the query filters
     var queryParam: HashMap<String, String> = HashMap()
@@ -77,7 +80,7 @@ class MainActivity : AppCompatActivity(), ISelectedCountry, ISelectedLimit{
                         putString(SHARED_PREF_KEY, query + '_' + JSONObject(queryParam as Map<*, *>).toString())
                         commit()
                     } catch (e: Exception) {
-                        Log.e(TAG, "Error storing query $e")
+                        Log.e(TAG, "Error storing query ${e.message}")
                     }
                 }
 
@@ -184,6 +187,15 @@ class MainActivity : AppCompatActivity(), ISelectedCountry, ISelectedLimit{
                 createFragApiRes(query, queryParam)
             }
         }
+    }
+
+    override fun onSelectedCard(string: String?) {
+       val intent = Intent(Intent.ACTION_VIEW, Uri.parse(string))
+       try {
+           this.startActivity(intent)
+       } catch (e: Exception) {
+           Log.e(TAG, "Error in implicit intent : ${e.message}")
+       }
     }
 
 }

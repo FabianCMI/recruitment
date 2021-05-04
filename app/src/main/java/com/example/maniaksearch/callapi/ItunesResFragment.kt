@@ -1,6 +1,8 @@
 package com.example.maniaksearch.callapi
 
+import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,8 @@ import com.example.maniaksearch.databinding.FragmentItunesResBinding
  * Fragment showing the result of the Itunes api call
  */
 class ItunesResFragment() : androidx.fragment.app.Fragment() {
+
+    private var chosenCard: ISelectedCard? = null
 
     /**
      * Static factory creating the fragment to avoid having a constructor with arguments
@@ -50,7 +54,9 @@ class ItunesResFragment() : androidx.fragment.app.Fragment() {
         val binding = FragmentItunesResBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        binding.apiResRecyclerView.adapter = ApiLinearAdapter()
+        binding.apiResRecyclerView.adapter = ApiLinearAdapter() {
+            apiRes -> chosenCard?.onSelectedCard(apiRes.collectionViewUrl)
+        }
         viewModel.query.observe(
                 viewLifecycleOwner,
                 { newQuery -> viewModel.getApiResults(newQuery, queryParam) }
@@ -59,5 +65,18 @@ class ItunesResFragment() : androidx.fragment.app.Fragment() {
         return binding.root
     }
 
+    override fun onAttach(activity: Activity) {
+        super.onAttach(requireActivity())
+        try {
+            chosenCard = activity as ISelectedCard?
+        } catch (e: ClassCastException) {
+            Log.e(com.example.maniaksearch.filters.TAG, "Activity doesn't implement the ISelectedCountry interface")
+        }
+    }
 
+}
+
+
+interface ISelectedCard {
+    fun onSelectedCard(string: String?)
 }
