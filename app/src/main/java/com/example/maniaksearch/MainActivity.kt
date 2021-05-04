@@ -19,7 +19,7 @@ import org.json.JSONObject
 const val TAG = "MainActivity"
 const val SHARED_PREF_KEY = "last_query"
 
-class MainActivity : AppCompatActivity(), ISelectedCountry{
+class MainActivity : AppCompatActivity(), ISelectedCountry, ISelectedLimit{
 
     // HashMap storing the query filters
     var queryParam: HashMap<String, String> = HashMap()
@@ -30,7 +30,9 @@ class MainActivity : AppCompatActivity(), ISelectedCountry{
         setContentView(R.layout.activity_main)
         val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
 
-
+        // Start filling query filters with default values
+        queryParam["country"] = "FR"
+        queryParam["explicit"] = "no"
 
         // Initialize data for filters recycler view
         val filtersDataset = DataSource().loadFilters()
@@ -59,10 +61,6 @@ class MainActivity : AppCompatActivity(), ISelectedCountry{
         }
         filterRecyclerView.setHasFixedSize(true)
 
-
-        // Start filling query filters with default values
-        queryParam["country"] = "FR"
-        queryParam["explicit"] = "no"
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -144,7 +142,7 @@ class MainActivity : AppCompatActivity(), ISelectedCountry{
 
             // Open Filters Dialog
             R.id.menu_filters -> {
-                FiltersDialogFragment().show(supportFragmentManager, "filters_menu")
+                FiltersDialogFragment((queryParam["limit"]?.toInt()) ?:50).show(supportFragmentManager, "filters_menu")
             }
             // Open Language dialog
             R.id.param_lang -> {
@@ -177,6 +175,15 @@ class MainActivity : AppCompatActivity(), ISelectedCountry{
             else -> "FRA"
         }
         createFragApiRes(query, queryParam)
+    }
+
+    override fun onSelectedLimit(limit: Int?) {
+        if (limit != null) {
+            if(limit in 1..200) {
+                queryParam["limit"] = limit.toString()
+                createFragApiRes(query, queryParam)
+            }
+        }
     }
 
 }
