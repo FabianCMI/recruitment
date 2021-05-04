@@ -55,7 +55,8 @@ class ItunesResFragment() : androidx.fragment.app.Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         binding.apiResRecyclerView.adapter = ApiLinearAdapter() {
-            apiRes -> chosenCard?.onSelectedCard(apiRes.collectionViewUrl)
+            apiRes -> chosenCard?.onSelectedCard(
+                (apiRes.collectionViewUrl ?: apiRes.trackViewUrl) ?: apiRes.previewUrl)
         }
         viewModel.query.observe(
                 viewLifecycleOwner,

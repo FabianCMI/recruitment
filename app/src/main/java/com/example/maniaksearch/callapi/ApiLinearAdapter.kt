@@ -49,7 +49,6 @@ class ApiLinearAdapter(private val listener: (ApiResults) -> Unit) : ListAdapter
             adaptedItunesRes.releaseDate = iTunesRes.releaseDate?.substring(0, 4) ?: ""
             adaptedItunesRes.artistName = iTunesRes.artistName
             adaptedItunesRes.artwork = iTunesRes.artworkUrl100
-            adaptedItunesRes.collectionViewUrl = iTunesRes.collectionViewUrl
 
             binding.apiRes = adaptedItunesRes
             binding.executePendingBindings()

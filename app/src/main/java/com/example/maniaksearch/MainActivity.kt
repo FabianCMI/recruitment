@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity(), ISelectedCountry, ISelectedLimit, ISel
                 this,
                 "${this.getString(R.string.media_toast)} ${this.getString(it.stringResourceId)}",
                 Toast.LENGTH_SHORT).show()
+            createFragApiRes(query, queryParam)
         }
         filterRecyclerView.setHasFixedSize(true)
 
@@ -190,8 +191,8 @@ class MainActivity : AppCompatActivity(), ISelectedCountry, ISelectedLimit, ISel
     }
 
     override fun onSelectedCard(string: String?) {
-       val intent = Intent(Intent.ACTION_VIEW, Uri.parse(string))
        try {
+           val intent = Intent(Intent.ACTION_VIEW, Uri.parse(string))
            this.startActivity(intent)
        } catch (e: Exception) {
            Log.e(TAG, "Error in implicit intent : ${e.message}")
