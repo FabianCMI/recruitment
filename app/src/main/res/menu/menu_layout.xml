@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/menu_filters"
+        android:title="@string/filters"
+        android:icon="@drawable/ic_filter"
+        android:enabled="true"
+        app:showAsAction="always">
+    </item>
+
+    <item android:id="@+id/menu_param"
+        android:title="@string/param"
+        android:icon="@drawable/ic_param"
+        android:enabled="false"
+        app:showAsAction="never">
+    </item>
+
+    <group
+        android:icon="@drawable/ic_param"
+        app:showAsAction="never">
+        <item android:id="@+id/param_explicit"
+            android:title="@string/param_explicit"
+            android:icon="@drawable/ic_broken_image"
+            android:checkable="true">
+
+        </item>
+        <item android:id="@+id/param_lang"
+            android:title="@string/param_lang"
+            android:icon="@drawable/ic_connection_error">
+        </item>
+
+    </group>
+
+
+</menu>

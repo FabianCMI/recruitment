@@ -1,6 +1,32 @@
 <resources>
     <string name="app_name">ManiakSearch</string>
-    <string name="search_hint">Rechercher sur l\'Itunes</string>
+    <string name="search_hint">Rechercher sur l\'ITunes Store</string>
     <string name="succes_call">résultats trouvés</string>
     <string name="failure_call">Impossible de charger les données :</string>
+    <string name="param">Paramètres</string>
+    <string name="param_explicit">Autoriser les recherches explicites</string>
+    <string name="param_lang">Pays</string>
+    <string name="param_lang_fr">France</string>
+    <string name="param_lang_us">USA</string>
+    <string name="param_lang_en">UK</string>
+
+    <!-- Filters names -->
+    <string name="media_music">Musique</string>
+    <string name="media_movie">Film</string>
+    <string name="media_podcast">Podcast</string>
+    <string name="media_music_video">Musique vidéo</string>
+    <string name="media_audiobook">Audiobook</string>
+    <string name="media_short_movie">Court-métrage</string>
+    <string name="media_tv_show">TV Show</string>
+    <string name="media_software">Logiciels</string>
+    <string name="media_ebook">e-book</string>
+    <string name="media_all">Tous les media</string>
+    <string name="media_toast">Filtre media activé :</string>
+    <string name="country_toast">"Localisation choisie : "</string>
+    <string name="filters">Filtres</string>
+    <string name="dialog_filters">Choisissez la limite du nombre de résultats que vous souhaitez</string>
+    <string name="dialog_valid">Valider</string>
+    <string name="dialog_cancel">Annuler</string>
+    <string name="dialog_filters_title">Filtrer la recherche</string>
+    <string name="dialog_filters_lang_title">Rechercher dans l\'ITunes Store</string>
 </resources>

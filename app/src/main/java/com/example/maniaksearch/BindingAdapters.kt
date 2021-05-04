@@ -1,13 +1,15 @@
 package com.example.maniaksearch
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.maniaksearch.callapi.ApiCallStatus
+import com.example.maniaksearch.callapi.ApiLinearAdapter
 import com.example.maniaksearch.network.ApiResults
-import com.example.maniaksearch.overview.ApiLinearAdapter
 
 @BindingAdapter("imageUrl")
 fun bindImage(imageView: ImageView, imageUrl: String?) {
@@ -41,4 +43,19 @@ fun bindPrice(textView: TextView, trackPrice: String?) {
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<ApiResults>?) {
     val adapter = recyclerView.adapter as ApiLinearAdapter
     adapter.submitList(data)
+}
+
+@BindingAdapter("apiCallStatus")
+fun bindStatus(statusImageView: ImageView, status: ApiCallStatus?){
+    when (status) {
+        ApiCallStatus.ERROR -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.ic_connection_error)
+        }
+        ApiCallStatus.LOADING -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.loading_animation)
+        }
+        ApiCallStatus.SUCCESS -> statusImageView.visibility = View.GONE
+    }
 }
